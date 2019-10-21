@@ -1,6 +1,7 @@
 package ru.sbt.mipt.oop;
 
-public class Light {
+public class Light implements RoomObject {
+    private final String name = "light";
     private boolean isOn;
     private final String id;
 
@@ -17,7 +18,24 @@ public class Light {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setOn(boolean on) {
         isOn = on;
+    }
+
+    public boolean execute(EventType eventType){
+        switch (eventType){
+            case LIGHT_ON:
+                this.setOn(true);
+                return true;
+            case LIGHT_OFF:
+                this.setOn(false);
+                return true;
+            default:
+                return false;
+        }
     }
 }

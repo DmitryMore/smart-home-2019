@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class SmartHome {
-    Collection<Room> rooms;
+    private Collection<Room> rooms;
 
     public SmartHome() {
         rooms = new ArrayList<>();
@@ -20,5 +20,16 @@ public class SmartHome {
 
     public Collection<Room> getRooms() {
         return rooms;
+    }
+
+    public void setAllLights(EventType eventType){
+        for (Room room: this.rooms){
+            for (RoomObject roomObject: room.getRoomObject()){
+                if (roomObject.getName().equals("light")){
+                    roomObject.execute(eventType);
+                }
+            }
+        }
+
     }
 }

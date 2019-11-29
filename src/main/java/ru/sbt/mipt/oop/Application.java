@@ -15,10 +15,6 @@ public class Application {
         SensorEventHandler sensorEventHandler = new SensorEventHandler(smartHome);
 
         // начинаем цикл обработки событий
-        SensorEvent event = EventGenerator.generateSensorEvent();
-        while (event != null) {
-            sensorEventHandler.processEvent(event);
-            event = EventGenerator.generateSensorEvent();
-        }
+        sensorEventHandler.run();
     }
 }

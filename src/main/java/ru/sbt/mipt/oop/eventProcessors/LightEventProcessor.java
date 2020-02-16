@@ -1,48 +1,32 @@
 package ru.sbt.mipt.oop.eventProcessors;
 
 import ru.sbt.mipt.oop.Light;
-import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.sensor.SensorEvent;
 
-import static ru.sbt.mipt.oop.sensor.SensorEventType.*;
 import static ru.sbt.mipt.oop.sensor.SensorEventType.DOOR_CLOSED;
+import static ru.sbt.mipt.oop.sensor.SensorEventType.DOOR_OPEN;
 
 public class LightEventProcessor implements EventProcessor{
-    private final SmartHome smartHome;
-    private final SensorEvent sensorEvent;
 
-    public LightEventProcessor(SmartHome smartHome, SensorEvent sensorEvent) {
-        this.smartHome = smartHome;
-        this.sensorEvent = sensorEvent;
+    public LightEventProcessor() {}
+
+    public void processEvent(SmartHome smartHome, SensorEvent sensorEvent) {
+        smartHome.execute(object -> {
+            if (!(object instanceof Light)) return;
+            Light light = (Light) object;
+            changeState(light, sensorEvent);
+        });
     }
 
-    @Override
-    public boolean isRightEvent() {
-        return (sensorEvent.getType() == LIGHT_ON || sensorEvent.getType() == LIGHT_OFF);
-    }
-
-    @Override
-    public void processEvent() {
-        if (isRightEvent()) {
-            for (Room room : smartHome.getRooms()) {
-                for (Light light : room.getLights()) {
-                    if (light.getId().equals(sensorEvent.getObjectId())) {
-                        changeState(room, light, sensorEvent);
-                    }
-                }
-            }
-        }
-    }
-
-    private void changeState(Room room, Light light, SensorEvent sensorEvent) {
+    private void changeState(Light light, SensorEvent sensorEvent) {
         if (sensorEvent.getType() == DOOR_OPEN){
             light.setOn(true);
-            System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
+            System.out.println("Light " + light.getId() + " was turned on.");
         }
         if (sensorEvent.getType() == DOOR_CLOSED){
             light.setOn(false);
-            System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
+            System.out.println("Light " + light.getId() + " was turned off.");
         }
     }
 }

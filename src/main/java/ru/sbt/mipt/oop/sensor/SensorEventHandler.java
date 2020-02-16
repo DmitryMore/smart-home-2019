@@ -3,13 +3,19 @@ package ru.sbt.mipt.oop.sensor;
 import ru.sbt.mipt.oop.EventGenerator;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.eventProcessors.DoorEventProcessor;
+import ru.sbt.mipt.oop.eventProcessors.EventProcessor;
 import ru.sbt.mipt.oop.eventProcessors.LightEventProcessor;
+
+import java.util.List;
 
 public class SensorEventHandler {
     private final SmartHome smartHome;
+    private final List<EventProcessor> eventProcessors;
 
-    public SensorEventHandler(SmartHome smartHome) {
+    public SensorEventHandler(SmartHome smartHome, List<EventProcessor> eventProcessors) {
         this.smartHome = smartHome;
+        this.eventProcessors = eventProcessors;
+
     }
 
     public void run(){
@@ -20,9 +26,10 @@ public class SensorEventHandler {
         }
     }
 
-    public void processEvent(SensorEvent event) {
+    private void processEvent(SensorEvent event) {
         System.out.println("Got event: " + event);
-        new LightEventProcessor(smartHome, event).processEvent();
-        new DoorEventProcessor(smartHome, event).processEvent();
+        for (EventProcessor eventProcessor : eventProcessors){
+            eventProcessor.processEvent(smartHome, event);
+        }
     }
 }

@@ -1,19 +1,20 @@
-package ru.sbt.mipt.oop.sensor;
+package ru.sbt.mipt.oop.eventProcessors;
 
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.alarm.ActivatedState;
 import ru.sbt.mipt.oop.alarm.AlertState;
 import ru.sbt.mipt.oop.alarm.HomeAlarm;
 import ru.sbt.mipt.oop.eventProcessors.EventProcessor;
+import ru.sbt.mipt.oop.sensor.SensorEvent;
 
 import static ru.sbt.mipt.oop.sensor.SensorEventType.*;
 
 import java.util.List;
 
-public class SensorEventDecorator {
+public class EventProcessorDecorator implements EventProcessor {
     private final List<EventProcessor> eventProcessors;
 
-    public SensorEventDecorator(List<EventProcessor> eventProcessors) {
+    public EventProcessorDecorator(List<EventProcessor> eventProcessors) {
         this.eventProcessors = eventProcessors;
     }
 
@@ -33,5 +34,8 @@ public class SensorEventDecorator {
                 eventProcessor.processEvent(smartHome, event);
             }
         }
+    }
+
+    public void setEventProcessors(List<EventProcessor> eventProcessors) {
     }
 }

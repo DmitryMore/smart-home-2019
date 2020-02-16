@@ -3,10 +3,12 @@ package ru.sbt.mipt.oop;
 import com.coolcompany.smarthome.events.SensorEventsManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import ru.sbt.mipt.oop.adapters.CCSensorEventAdapter;
 import ru.sbt.mipt.oop.adapters.DoorEventAdapter;
 import ru.sbt.mipt.oop.adapters.EventHandlerAdapter;
 import ru.sbt.mipt.oop.adapters.LightEventAdapter;
+import ru.sbt.mipt.oop.alarm.HomeAlarm;
 import ru.sbt.mipt.oop.eventProcessors.*;
 import ru.sbt.mipt.oop.homeReader.HomeReaderGson;
 import ru.sbt.mipt.oop.homeReader.HomeReaderInterface;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Configuration
+@Import(RemoteControlConfiguration.class)
 public class SpringConfiguration {
 
     @Bean
@@ -56,6 +59,12 @@ public class SpringConfiguration {
         SmartHome smartHome = homeReader.fileToSmartHome();
         smartHome.addAlarm();
         return smartHome;
+    }
+
+    @Bean
+    HomeAlarm alarm() throws IOException {
+        SmartHome smartHome = smartHome();
+        return smartHome.getAlarm();
     }
 
     @Bean

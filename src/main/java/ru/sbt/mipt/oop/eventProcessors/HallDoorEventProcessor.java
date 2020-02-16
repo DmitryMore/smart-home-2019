@@ -20,7 +20,7 @@ public class HallDoorEventProcessor implements EventProcessor {
                     room.execute(doorObject -> {
                         if (!(doorObject instanceof Door)) return;
                         Door door = (Door) doorObject;
-                        if (door.getId().equals(sensorEvent.getObjectId()) && door.isOpen()) {
+                        if (sensorEvent.getObjectId().equals(door.getId()) && door.isOpen()) {
                             this.changeState(smartHome, sensorEvent);
                         }
                     });

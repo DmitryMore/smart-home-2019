@@ -4,8 +4,7 @@ import ru.sbt.mipt.oop.Light;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.sensor.SensorEvent;
 
-import static ru.sbt.mipt.oop.sensor.SensorEventType.DOOR_CLOSED;
-import static ru.sbt.mipt.oop.sensor.SensorEventType.DOOR_OPEN;
+import static ru.sbt.mipt.oop.sensor.SensorEventType.*;
 
 public class LightEventProcessor implements EventProcessor{
 
@@ -20,13 +19,15 @@ public class LightEventProcessor implements EventProcessor{
     }
 
     private void changeState(Light light, SensorEvent sensorEvent) {
-        if (sensorEvent.getType() == DOOR_OPEN){
-            light.setOn(true);
-            System.out.println("Light " + light.getId() + " was turned on.");
-        }
-        if (sensorEvent.getType() == DOOR_CLOSED){
-            light.setOn(false);
-            System.out.println("Light " + light.getId() + " was turned off.");
+        if (sensorEvent.getObjectId().equals(light.getId())) {
+            if (sensorEvent.getType() == LIGHT_ON) {
+                light.setOn(true);
+                System.out.println("Light " + light.getId() + " was turned on.");
+            }
+            if (sensorEvent.getType() == LIGHT_OFF) {
+                light.setOn(false);
+                System.out.println("Light " + light.getId() + " was turned off.");
+            }
         }
     }
 }

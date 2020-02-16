@@ -4,6 +4,6 @@ import ru.sbt.mipt.oop.SmartHome;
 
 import java.io.IOException;
 
-public interface HomeReader {
+public interface HomeReaderInterface {
     SmartHome fileToSmartHome();
 }

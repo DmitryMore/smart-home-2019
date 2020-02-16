@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class HomeReaderGson implements HomeReader {
+public class HomeReaderGson implements HomeReaderInterface {
     private Gson gson;
     private String json;
 

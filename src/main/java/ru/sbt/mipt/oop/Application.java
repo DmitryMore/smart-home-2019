@@ -1,6 +1,6 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.homeReader.HomeReader;
+import ru.sbt.mipt.oop.homeReader.HomeReaderInterface;
 import ru.sbt.mipt.oop.homeReader.HomeReaderGson;
 import ru.sbt.mipt.oop.sensor.*;
 
@@ -10,7 +10,7 @@ public class Application {
 
     public static void main(String... args) throws IOException {
         // считываем состояние дома из файла
-        HomeReader homeReader = new HomeReaderGson("smart-home-1.js");
+        HomeReaderInterface homeReader = new HomeReaderGson("smart-home-1.js");
         SmartHome smartHome = homeReader.fileToSmartHome();
         SensorEventHandler sensorEventHandler = new SensorEventHandler(smartHome);
 

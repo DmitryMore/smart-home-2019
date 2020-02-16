@@ -1,0 +1,29 @@
+package ru.sbt.mipt.oop.sensor;
+
+public class SensorDoorLightEvent implements SensorEvent {
+    private final SensorEventType type;
+    private final String objectId;
+
+    public SensorDoorLightEvent(SensorEventType type, String objectId) {
+        this.type = type;
+        this.objectId = objectId;
+    }
+
+    @Override
+    public SensorEventType getType() {
+        return type;
+    }
+
+    @Override
+    public String getObjectId() {
+        return objectId;
+    }
+
+    @Override
+    public String toString() {
+        return "SensorEvent{" +
+                "type=" + type +
+                ", objectId='" + objectId + '\'' +
+                '}';
+    }
+}

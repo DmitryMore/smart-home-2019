@@ -5,7 +5,8 @@ import ru.sbt.mipt.oop.Light;
 import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.sensor.SensorEvent;
-import ru.sbt.mipt.oop.sensor.SensorEventType;
+
+import static ru.sbt.mipt.oop.sensor.SensorEventType.*;
 
 public class HallDoorEventProcessor implements EventProcessor {
 
@@ -30,7 +31,7 @@ public class HallDoorEventProcessor implements EventProcessor {
     }
 
     private void changeState(SmartHome smartHome, SensorEvent sensorEvent){
-        if (sensorEvent.getType() != SensorEventType.DOOR_CLOSED) return;
+        if (sensorEvent.getType() != DOOR_CLOSED) return;
         smartHome.execute(object -> {
             if (!(object instanceof Light)) return;
             Light light = (Light) object;
